@@ -9,7 +9,8 @@ import java.io.Serializable;
  * the objects of the class or its derived classes to be sent over a network
  * connection or to be stored on a device. It is intended to define only a very
  * basic functionality and to be used exclusively as a base class for
- * extensions.
+ * extensions. Some messages (requests) require a response, while others
+ * (responses) don't.
  *
  * @author iliyan-kostov
  */
@@ -22,12 +23,21 @@ public abstract class Message implements Serializable {
     protected String type;
 
     /**
+     * whether this {@link Message} requires a response or not.
+     */
+    protected boolean requiresResponse;
+
+    /**
      * Constructs a message using the provided {@link String} as message type.
      *
      * @param type the type of the message.
+     *
+     * @param requiresResponse whether this {@link Message} requires a response
+     * or not.
      */
-    public Message(String type) {
+    public Message(String type, boolean requiresResponse) {
         this.type = type;
+        this.requiresResponse = requiresResponse;
     }
 
     /**
@@ -38,5 +48,14 @@ public abstract class Message implements Serializable {
      */
     public final String getType() {
         return this.type;
+    }
+
+    /**
+     * Returns whether the {@link Message} requires a response.
+     *
+     * @return true if the {@link Message} requires a response, false otherwise.
+     */
+    public final boolean requiresResponse() {
+        return this.requiresResponse;
     }
 }
