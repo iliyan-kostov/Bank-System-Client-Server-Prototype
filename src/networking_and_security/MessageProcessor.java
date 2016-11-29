@@ -1,5 +1,7 @@
 package networking_and_security;
 
+import networking_and_security.messages.Message;
+
 /**
  * This interface specifies a contract for processing various {@link Message}
  * objects. It is intended to be used as a handler in a module that relies on
