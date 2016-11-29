@@ -1,4 +1,4 @@
-package networking_and_security;
+package networking_and_security.messages;
 
 import java.io.Serializable;
 
