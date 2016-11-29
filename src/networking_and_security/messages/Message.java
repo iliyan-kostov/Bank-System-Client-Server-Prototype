@@ -18,9 +18,34 @@ public abstract class Message implements Serializable {
 
     /**
      * the type of the message, used to recognize the actions requested and also
-     * to distinguish between different derived classes.
+     * to distinguish between different derived classes when using
+     * serialization. Different message types are implemented according to the
+     * operations supported by the bank.
      */
-    protected String type;
+    public static enum Type {
+
+        /**
+         * client request for login attempt.
+         */
+        AUTHENTICATION_LOGIN_REQUEST,
+        /**
+         * server response for client login attempt.
+         */
+        AUTHENTICATION_LOGIN_RESPONSE,
+        /**
+         * client request for registration attempt.
+         */
+        AUTHENTICATION_REGISTER_REQUEST,
+        /**
+         * server response for client registration attempt.
+         */
+        AUTHENTICATION_REGISTER_RESPONSE
+    };
+
+    /**
+     * the type of the message.
+     */
+    protected Type type;
 
     /**
      * whether this {@link Message} requires a response or not.
@@ -28,32 +53,33 @@ public abstract class Message implements Serializable {
     protected boolean requiresResponse;
 
     /**
-     * Constructs a message using the provided {@link String} as message type.
+     * Constructs a message using the provided arguments.
      *
      * @param type the type of the message.
      *
      * @param requiresResponse whether this {@link Message} requires a response
      * or not.
      */
-    public Message(String type, boolean requiresResponse) {
+    public Message(Type type, boolean requiresResponse) {
         this.type = type;
         this.requiresResponse = requiresResponse;
     }
 
     /**
      * Returns the type of the message, used to recognize the actions requested
-     * and also to distinguish between different derived classes.
+     * and also to distinguish between different derived classes when using
+     * serialization.
      *
-     * @return the type of the message.
+     * @return the Type of the message.
      */
-    public final String getType() {
+    public final Type getType() {
         return this.type;
     }
 
     /**
-     * Returns whether the {@link Message} requires a response.
+     * Returns whether the message requires a response.
      *
-     * @return true if the {@link Message} requires a response, false otherwise.
+     * @return true if the message requires a response, false otherwise.
      */
     public final boolean requiresResponse() {
         return this.requiresResponse;
