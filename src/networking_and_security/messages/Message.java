@@ -9,8 +9,9 @@ import java.io.Serializable;
  * the objects of the class or its derived classes to be sent over a network
  * connection or to be stored on a device. It is intended to define only a very
  * basic functionality and to be used exclusively as a base class for
- * extensions. Some messages (requests) require a response, while others
- * (responses) don't.
+ * extensions. {@link Message} subclass tree includes mostly abstract classes.
+ * Some messages ({@link Request}) require a response, while others
+ * ({@link Response}) don't.
  *
  * @author iliyan-kostov
  */
@@ -22,45 +23,44 @@ public abstract class Message implements Serializable {
      * serialization. Different message types are implemented according to the
      * operations supported by the bank.
      */
-    public static enum Type {
-
+    public static enum TYPE {
         /**
          * client request for login attempt.
          */
-        AUTHENTICATION_LOGIN_REQUEST,
+        LOGIN_REQUEST,
         /**
          * server response for client login attempt.
          */
-        AUTHENTICATION_LOGIN_RESPONSE,
+        LOGIN_RESPONSE,
         /**
          * client request for registration attempt.
          */
-        AUTHENTICATION_REGISTER_REQUEST,
+        SIGNUP_REQUEST,
         /**
          * server response for client registration attempt.
          */
-        AUTHENTICATION_REGISTER_RESPONSE
+        SIGNUP_RESPONSE
     };
 
     /**
      * the type of the message.
      */
-    protected Type type;
+    private TYPE type;
 
     /**
      * whether this {@link Message} requires a response or not.
      */
-    protected boolean requiresResponse;
+    private boolean requiresResponse;
 
     /**
-     * Constructs a message using the provided arguments.
+     * Constructs a {@link Message} using the provided arguments.
      *
      * @param type the type of the message.
      *
      * @param requiresResponse whether this {@link Message} requires a response
      * or not.
      */
-    public Message(Type type, boolean requiresResponse) {
+    public Message(TYPE type, boolean requiresResponse) {
         this.type = type;
         this.requiresResponse = requiresResponse;
     }
@@ -70,9 +70,9 @@ public abstract class Message implements Serializable {
      * and also to distinguish between different derived classes when using
      * serialization.
      *
-     * @return the Type of the message.
+     * @return the type of the message.
      */
-    public final Type getType() {
+    public final TYPE getType() {
         return this.type;
     }
 
