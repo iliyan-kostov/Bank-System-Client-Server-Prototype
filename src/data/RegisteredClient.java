@@ -12,7 +12,7 @@ public class RegisteredClient {
     /**
      * the client ID as assigned by the bank database.
      */
-    public String id;
+    private String id;
 
     /**
      * Creates a client object with the specified ID (assigned according to the

@@ -10,12 +10,12 @@ public class BankAccount {
     /**
      * the ID of the account as assigned by the bank database.
      */
-    protected String id;
+    private String id;
 
     /**
      * the client ID of the owner as assigned by the bank database.
      */
-    protected String ownerId;
+    private String ownerId;
 
     /**
      * Creates a {@link BankAccount} object by specified account ID and owner
