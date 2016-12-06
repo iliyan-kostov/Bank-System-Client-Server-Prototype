@@ -15,7 +15,7 @@ public class Server {
     private int port;
     private DatabaseController databaseController;
     private ServerSocket serverSocket;
-    boolean keepRunning;
+    private boolean keepRunning;
     private ConnectionManager connectionManager;
     private Authenticator authenticator;
 
