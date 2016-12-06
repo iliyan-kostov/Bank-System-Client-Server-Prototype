@@ -5,6 +5,8 @@ import multithreading.messages.Message;
 import java.net.Socket;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,13 +22,13 @@ public class Connection extends Thread {
     private ObjectOutputStream outputStream;
     private boolean keepRunning;
 
-    public Connection(Client client, Socket socket, ObjectInputStream inputStream, ObjectOutputStream outputStream, Server server, ConnectionManager connectionManager) {
+    public Connection(Client client, Socket socket, Server server, ConnectionManager connectionManager) {
         this.client = client;
         this.socket = socket;
         this.server = server;
         this.connectionManager = connectionManager;
-        this.inputStream = inputStream;
-        this.outputStream = outputStream;
+        this.inputStream = null;
+        this.outputStream = null;
         this.keepRunning = true;
     }
 
@@ -43,7 +45,16 @@ public class Connection extends Thread {
     public void run() {
         this.keepRunning = true;
 
-        // initialization: at constructor
+        // initialization:
+        if (this.keepRunning) {
+            try {
+                this.inputStream = new ObjectInputStream(this.socket.getInputStream());
+                this.outputStream = new ObjectOutputStream(this.socket.getOutputStream());
+            } catch (IOException ex) {
+                this.keepRunning = false;
+            }
+        }
+
         // operation:
         while (!this.isInterrupted() && this.keepRunning) {
             try {

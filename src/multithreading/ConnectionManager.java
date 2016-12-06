@@ -53,7 +53,7 @@ public class ConnectionManager {
             }
             // create a new connection to the client:
             {
-                Connection newConnection = new Connection(client, socket, inputStream, outputStream, this.server, this);
+                Connection newConnection = new Connection(client, socket, this.server, this);
                 clientConnectionMap.put(client, newConnection);
                 newConnection.start();
             }
